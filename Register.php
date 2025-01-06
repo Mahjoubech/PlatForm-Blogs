@@ -1,17 +1,16 @@
 
 <?php
 require_once  "./database/connexion.php";
-require_once   "class/class_rejister.php";
-
+require_once   "./class/Client.php";
+$db = new DatabaseConnection();
 if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['btn_submit'])) {
   if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
        $username = $_POST['name'] ;
        $email = $_POST['email'] ;
        $password = $_POST['password'];
-       $role = $_POST['role'];
-
-   $register = new Register();
-   $register->insertUtilisateurs($username, $email, $password, $role);
+       $role = 2;
+   $register = new Client($db->getConnection());
+   $register->register($username, $email, $password, $role);
 if ($register) {
     header('location:login.php');
     exit();
@@ -166,6 +165,14 @@ if ($register) {
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
                             placeholder="Enter your email"
                         >
+                        <?php if (isset($_SESSION['emaildija'])): ?>
+         <div class="text-red-500 text-sm mt-2">
+            <?php 
+                echo $_SESSION['emaildija']; 
+             unset($_SESSION['emaildija']); // Supprimer le message après affichage
+            ?>
+        </div>
+             <?php endif; ?>
                     </div>
 
                     <div class="input-group">
@@ -179,21 +186,6 @@ if ($register) {
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
                             placeholder="Create a password"
                         >
-                    </div>
-
-                    <div class="input-group">
-                        <label class="block text-secondary mb-2">
-                            <i class="fas fa-user-tag mr-2"></i>Role
-                        </label>
-                        <select 
-                            name="role" 
-                            required
-                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-colors"
-                        >
-                            <option value="" disabled selected>Select your role</option>
-                            <option value="auteur">Auteur</option>
-                            <option value="user">Utilisateur</option>
-                        </select>
                     </div>
 
                     <button 
