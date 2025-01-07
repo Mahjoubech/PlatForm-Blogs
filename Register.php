@@ -1,26 +1,6 @@
-
-<?php
-require_once  "./database/connexion.php";
-require_once   "./class/Client.php";
-$db = new DatabaseConnection();
-if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['btn_submit'])) {
-  if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
-       $username = $_POST['name'] ;
-       $email = $_POST['email'] ;
-       $password = $_POST['password'];
-       $role = 2;
-   $register = new Client($db->getConnection());
-   $register->register($username, $email, $password, $role);
-if ($register) {
-    header('location:login.php');
-    exit();
-}
-  }
-}
-
+<?php 
+session_start();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,7 +120,7 @@ if ($register) {
 
             <!-- Form Body -->
             <div class="p-6 space-y-6">
-                <form method="POST" action="" class="space-y-6">
+                <form method="POST" action="./controller/controgister.php" class="space-y-6">
                     <div class="input-group">
                         <label class="block text-secondary mb-2">
                             <i class="fas fa-user mr-2"></i>Full Name
@@ -166,10 +146,10 @@ if ($register) {
                             placeholder="Enter your email"
                         >
                         <?php if (isset($_SESSION['emaildija'])): ?>
-         <div class="text-red-500 text-sm mt-2">
+                          <div class="text-red-500 text-sm mt-2">
             <?php 
                 echo $_SESSION['emaildija']; 
-             unset($_SESSION['emaildija']); // Supprimer le message après affichage
+            unset($_SESSION['emaildija']);
             ?>
         </div>
              <?php endif; ?>
@@ -199,7 +179,7 @@ if ($register) {
 
                     <div class="text-center text-neutral">
                         Already have an account? 
-                        <a href="signin.php" class="text-primary hover:underline">
+                        <a href="login.php" class="text-primary hover:underline">
                             Login here
                         </a>
                     </div>
