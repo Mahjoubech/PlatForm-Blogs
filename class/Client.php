@@ -10,11 +10,14 @@ class Client extends User
         var_dump($client["role_id"]);
         if ($client) {
         if ($this->verifyPassword($password, $client['password']) && $client['role_id'] == 2) {
+            $_SESSION['user'] = $client;
+
             header('location: .././views/client.php');
-            $this->createSession($client);
+           
             } else {
+                $_SESSION['user'] = $client;
+
                 header('location: .././views/admin.php');
-                $this->createSession($client);
             }
             return true;
     }
