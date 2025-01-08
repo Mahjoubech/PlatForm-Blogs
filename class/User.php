@@ -5,8 +5,6 @@ session_start();
      public function __construct($cnx) {
         $this->cnx = $cnx;
      }
-     abstract public function login($email, $password): bool;
-    
      protected function verifyPassword($password, $hashedPassword): bool {
          return password_verify($password, $hashedPassword);
      }
