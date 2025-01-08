@@ -17,7 +17,7 @@ class Client extends User
             } else {
                 $_SESSION['user'] = $client;
 
-                header('location: .././views/admin.php');
+                header('location: .././views/admin/article.php');
             }
             return true;
     }
