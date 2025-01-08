@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])) {
      $register->login($email,$password);
     }}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
