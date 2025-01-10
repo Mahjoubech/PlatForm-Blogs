@@ -10,7 +10,6 @@ class DatabaseConnection {
     public function __construct() {
         $this->connect();
     }
-
     private function connect() {
         try {
             $dsn = "mysql:host={$this->host};dbname={$this->database};charset=utf8mb4";
