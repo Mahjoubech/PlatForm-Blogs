@@ -4,10 +4,10 @@ session_start();
 require_once  "../../database/connexion.php";
 require_once   "../../class/Article.php";
 
-// if (!isset($_SESSION['user']) || $_SESSION['user']['role_id'] != 1 ) {
-//    header("Location: blog.php"); 
-//    exit();
-//  }
+if (!isset($_SESSION['user']) || $_SESSION['user']['role_id'] != 1 ) {
+   header("Location: blog.php"); 
+   exit();
+ }
 
 $db = new DatabaseConnection();
 $articles = new Article($db->getConnection());
@@ -251,8 +251,7 @@ $articles = new Article($db->getConnection());
 
                 </div>
             
-            </div>
-            
+            </div> 
         </main>
     </div>
      <!------- form add article ------------->
@@ -260,16 +259,17 @@ $articles = new Article($db->getConnection());
       <div class="wrapper">
         <div class="post">
           <header>Create Article</header>
-          <form method="post" action="article.php">
+          <form method="post" action="../.././controller/contArt.php">
             <div class="content">
-              <img src=".././img/1054-1728555216.jpg" alt="logo">
+              <img src="../.././assets/img/1054-1728555216.jpg" alt="logo">
               <div class="details">
                 <p><?php echo $_SESSION['user']['username']?></p>
                  
                   <select name="selectCat" class="text-[11px] bg-gray-200 text-black p-2 rounded-md focus:outline-none" >
                     <option value="" disabled selected>Select category </option>
                     <?php foreach($category as $catg){?>
-                    <option value="<?php echo $catg['catId']?>"><?php echo $catg['name']?></option>
+                    <option value="1"> hhhhhhh </option>
+                    <!-- <option value="<?php //echo $catg['catId']?>"><?php //echo $catg['name']?></option> -->
                     <?php } ?>
                   </select>
               </div>
@@ -280,7 +280,7 @@ $articles = new Article($db->getConnection());
             <div class="options">
               <input type="text" name="lienimage" id="imag" placeholder="Add Lien Src Image">
               <ul class="list">
-                <li id="uploadBtn"><img src=".././img/gallery.svg" alt="gallery"></li>
+                <li id="uploadBtn"><img src="../.././assets/img/gallery.svg" alt="gallery"></li>
               </ul>
             </div>
             <button type="submit" name="addArt">Add</button>
@@ -298,7 +298,7 @@ $articles = new Article($db->getConnection());
           <header>Update Article</header>
           <form method="post" action="editarticle.php?ideditart=<?php echo $row['art_Id']?>">
             <div class="content">
-              <img src=".././img/1054-1728555216.jpg" alt="logo">
+              <img src="../.././assets/img/1054-1728555216.jpg" alt="logo">
               <div class="details">
                 <p><?php echo $_SESSION['user']['username']?></p>
                  
@@ -314,9 +314,9 @@ $articles = new Article($db->getConnection());
             <textarea name="editdescrp" placeholder="What's on your mind, Cherkaoui?" value="" spellcheck="false" required ><?php if(isset($row['content'])) echo $row['content']?></textarea>
            
             <div class="options">
-              <input type="text" name="editlienimage" id="imag" placeholder="Add Lien Src Image" value="<?php if(isset($row['image'])) echo $row['image']?>">
+              <input type="text" name="editlienimage" id="imag" placeholder="Add Image" value="<?php if(isset($row['image'])) echo $row['image']?>">
               <ul class="list">
-                <li id="uploadBtn"><img src=".././img/gallery.svg" alt="gallery"></li>
+                <li id="uploadBtn"><img src="../.././assets/img/gallery.svg" alt="gallery"></li>
               </ul>
             </div>
             <button type="submit" name="edtArt">EDIT</button>
