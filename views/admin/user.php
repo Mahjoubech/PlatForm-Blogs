@@ -1,31 +1,29 @@
 
 <?php
- session_start();
- include '.././src/datacnx.php';
+ require_once '../.././database/connexion.php';
+require_once '../.././class/Client.php';
+$db = new DatabaseConnection();
   if (!isset($_SESSION['user']) || $_SESSION['user']['role_id'] != 1 ) {
       header("Location: blog.php"); 
       exit();
     }
 //for display data
 //Requets
-$sqldata= $cnx->query('SELECT * FROM user');
-//Get values
-$users = $sqldata->fetch_all(MYSQLI_ASSOC);
-
-//delet user;
-if(isset($_GET['idUser'])){
-   $iduse = $_GET['idUser'];
-$delet = $cnx->prepare('DELETE FROM user WHERE useId=?');
-$delet->execute([$iduse]); 
-header('Location: user.php');
-}
-//chage user role;
-if(isset($_GET['idrole'])){
-    $iduse = $_GET['idrole'];
- $change = $cnx->prepare('update user set role_id=1 WHERE useId=?');
- $change->execute([$iduse]); 
- header('Location: user.php');
- }
+$users= new Client($db->getConnection());
+// //delet user;
+// if(isset($_GET['idUser'])){
+//    $iduse = $_GET['idUser'];
+// $delet = $cnx->prepare('DELETE FROM user WHERE useId=?');
+// $delet->execute([$iduse]); 
+// header('Location: user.php');
+// }
+// //chage user role;
+// if(isset($_GET['idrole'])){
+//     $iduse = $_GET['idrole'];
+//  $change = $cnx->prepare('update user set role_id=1 WHERE useId=?');
+//  $change->execute([$iduse]); 
+//  header('Location: user.php');
+//  }
 
 ?>
 
@@ -36,7 +34,7 @@ if(isset($_GET['idrole'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <title>Modern Admin Dashboard</title>
-    <link rel="stylesheet" href=".././css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -159,7 +157,7 @@ if(isset($_GET['idrole'])){
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($users as $user){?>
+                                <?php foreach($users->getAllUser() as $user){?>
                                 <tr>
                                     <td>#<?php echo $user['useId'];?></td>
                                     <td>                                             
