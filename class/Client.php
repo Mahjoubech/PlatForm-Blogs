@@ -1,6 +1,10 @@
 <?php
-require_once 'User.php';
-class Client extends User {
+require_once __DIR__ . '/User.php';
+
+class Client extends User{
+    public function __construct($cnx) {
+        parent ::__construct($cnx);
+    }
     public function login($email, $password): bool {
         $stmt = $this->cnx->prepare("SELECT * FROM user WHERE email = ?");
         $stmt->execute([$email]);
@@ -23,7 +27,7 @@ class Client extends User {
 
         return false; 
     }
-
+      
     public function register($username, $email, $password, $role) {
         $stmt = $this->cnx->prepare("SELECT * FROM user WHERE email = :email");
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
@@ -50,5 +54,12 @@ class Client extends User {
         } else {
             throw new Exception("Erreur lors de l'inscription. Veuillez réessayer.");
         }
+    }
+    function getAllUser(){
+        $sql = $this->cnx->prepare('
+           SELECT * FROM user WHERE role_id = 2
+        ');
+        $sql->execute();
+        return $sql->fetchAll(PDO::FETCH_ASSOC);
     }
 }
