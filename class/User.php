@@ -1,6 +1,6 @@
 <?php 
 session_start();
-abstract class User {
+abstract class User{
     protected $username;
     protected $email;
     protected $password;
