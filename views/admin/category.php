@@ -9,13 +9,11 @@
      exit();
    }
 //affiche data in edit 
-if(isset($_GET['editId'])){
-
-    $id = $_GET['editId'];
+if(isset($_GET['idEdit'])){
+    $id = $_GET['idEdit'];
     $category ->setId( $id);
     $tab = $category ->getCategoryId();
     var_dump($tab);
-  header('Location: category.php'); 
 }
 
 //edit category
@@ -143,16 +141,16 @@ if(isset($_GET['editId'])){
                         
                     </div>
                     <div id="editcat" class="record-header w-[1px] h-[10px] mr-[50px]" >
-                        <form method="post" action="../.././controller/controlCategory.php?idcatgr=<?php echo $tab['catId']; ?>">
+                        <form method="post" action="../.././controller/controlCategory.php?idcatgr=<?php echo $tab[0]['catId']; ?>">
                              <div class="add">
-                          <input class="ml-5" name="nameedit" type="text" placeholder="enter Category" value="<?php echo isset($tab['name']) ?  $tab['name'] : '' ;?>">
+                          <input class="ml-5" name="nameedit" type="text" placeholder="enter Category" value="<?php echo isset($tab[0]['name']) ?  $tab[0]['name'] : '' ;?>">
                           <button type="submit" name="editcat" id="hideedit">  Edit </button>
                        </div>
                      </form>
                      </div>
                         <div class="browse">
                             
-                           <input type="search" placeholder="Search" class="record-search">
+                           <!-- <input type="search" placeholder="Search" class="record-search"> -->
                             <select name="" id="">
                                 <option value="">Filtter</option>
                             </select>
@@ -183,8 +181,9 @@ if(isset($_GET['editId'])){
                                     
                                     <td class="flex">
                                         <div class="actions ml-3">
-                                            <span ><a  href="../.././controller/controlCategory.php?iddelcatgr=<?php echo $row['catId']; ?>"><i class="fa-solid fa-trash"></i></a></span>
-                                            <span id="editbtn" class="ml-7"><a  href="./category.php?php echo $row['catId']; ?>"><i class="fa-regular fa-pen-to-square"></i></a></span>                        
+                                            <span ><a href="../.././controller/controlCategory.php?iddelcatgr=<?php echo $row['catId']; ?>"><i class="fa-solid fa-trash"></i></a></span>
+
+                                            <span id="editbtn" class="ml-7"><a href="./category.php?idEdit=<?php echo $row['catId']; ?>"><i class="fa-regular fa-pen-to-square"></i></a></span>                        
                                         </div>
                   
                     <div>
