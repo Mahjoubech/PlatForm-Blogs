@@ -42,6 +42,10 @@ class Category{
         $get->execute([$this->getId()]); 
         return $get->fetchAll(PDO::FETCH_ASSOC);
        }
+       public function editCategory(){
+        $stmt = $this->cnx->prepare("UPDATE category SET name=? WHERE catId=?");
+        $stmt->execute([$this->getName(),$this->getId()]); 
+       }
 }
 
 
