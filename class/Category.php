@@ -33,7 +33,15 @@ class Category{
       $sql = $this->cnx->prepare('INSERT INTO category(name) VALUES (?)');
       $sql->execute([$this->getName()]);
      }
-     
+     public function deletCategory(){
+        $delet = $this->cnx->prepare('DELETE FROM category WHERE catId=?');
+        $delet->execute([$this->getId()]); 
+       }
+       public function getCategoryId(){
+        $get = $this->cnx->prepare('SELECT * FROM `category` WHERE catId = ?');
+        $get->execute([$this->getId()]); 
+        return $get->fetchAll(PDO::FETCH_ASSOC);
+       }
 }
 
 
