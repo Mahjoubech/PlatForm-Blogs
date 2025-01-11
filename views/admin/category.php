@@ -1,56 +1,32 @@
 <?php
+ require_once '../.././database/connexion.php';
+ require_once '../.././class/Category.php';
+ $db = new DatabaseConnection();
+ $category = new Category($db->getConnection());
  session_start();
-include '.././src/datacnx.php';
  if (!isset($_SESSION['user']) || $_SESSION['user']['role_id'] != 1 ) {
      header("Location: blog.php"); 
      exit();
    }
 
- //for display data
- //Requets
- $sqldata= $cnx->query('SELECT * from category order by catId Asc');
- //Get values
- $category = $sqldata->fetch_all(MYSQLI_ASSOC);
+// //delet category
+//  if(isset($_GET['idcatgr'])){
+//     $catgrId = $_GET['idcatgr'];
+//  $delet = $cnx->prepare('DELETE FROM category WHERE catId=?');
+//  $delet->execute([$catgrId]); 
+//  header('Location: category.php');
+//  }
 
- //ajout category
- if( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcat'])){
-    $nameCat = htmlspecialchars($_POST['namecat']);
-    $errors = [];
-    if (empty($nameCat)) {
-        $errors[] = "< script > alert('invalid name') < /script>";
-    }
-    if (empty($errors)) {
-        //insert into
-    $query =  $cnx->query("INSERT INTO category(name) 
-                                VALUES ('$nameCat')");
-    header('Location: category.php');
-       exit;
-       }else{
-        $_SESSION['errors'] = $errors;
-        print_r($_SESSION['errors']);
-        unset($_SESSION['errors']);
-        header('Location: category.php');
-        exit;
-     }
-}
-//delet category
- if(isset($_GET['idcatgr'])){
-    $catgrId = $_GET['idcatgr'];
- $delet = $cnx->prepare('DELETE FROM category WHERE catId=?');
- $delet->execute([$catgrId]); 
- header('Location: category.php');
- }
+//  //affiche data in edit 
+//  if(isset($_GET['editId'])){
 
- //affiche data in edit 
- if(isset($_GET['editId'])){
-
-    $id = $_GET['editId'];
-    $edit = "SELECT * FROM `category` WHERE catId = $id";
-    $result = mysqli_query($cnx, $edit);
-    $tab = mysqli_fetch_assoc($result);
+//     $id = $_GET['editId'];
+//     $edit = "SELECT * FROM `category` WHERE catId = $id";
+//     $result = mysqli_query($cnx, $edit);
+//     $tab = mysqli_fetch_assoc($result);
 
    
-}
+// }
 //edit category
 
 
@@ -65,7 +41,7 @@ include '.././src/datacnx.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
     <title>Modern Admin Dashboard</title>
-    <link rel="stylesheet" href=".././css/style.css">
+    <link rel="stylesheet" href="../.././assets/css/style.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -165,7 +141,7 @@ include '.././src/datacnx.php';
 
                 <div class="records table-responsive">
                     <div class="record-header">
-                        <form method="post" action="category.php">
+                        <form method="post" action="../.././controller/controlCategory.php">
                         <div class="add">
                           <button type="submit" name="addcat"> Add </button>
                           <input class="ml-5" name="namecat" type="text" placeholder="enter Category">
@@ -203,7 +179,7 @@ include '.././src/datacnx.php';
                             </thead>
                             <tbody>
                             <?php
-                           foreach($category as $row){
+                           foreach($category->getAllCategory() as $row){
                             ?>
                                 <tr>
                                     <td>#<?php echo $row['catId']; ?></td>
