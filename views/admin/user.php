@@ -2,7 +2,6 @@
 <?php
  require_once '../.././database/connexion.php';
 require_once '../.././class/Client.php';
-require_once '../.././class/Admin.php';
 $db = new DatabaseConnection();
   if (!isset($_SESSION['user']) || $_SESSION['user']['role_id'] != 1 ) {
       header("Location: blog.php"); 
@@ -11,22 +10,6 @@ $db = new DatabaseConnection();
 //for display data
 //Requets
 $users= new Client($db->getConnection());
-$admin = new Admin($db->getConnection());
- //delet user;
-if(isset($_GET['idUser'])){
-   $iduse = $_GET['idUser'];
-   $admin->setId($iduse);
-   $admin->DeletUser();
-header('Location: user.php');
-}
-// //chage user role;
-if(isset($_GET['idrole'])){
-    $iduse = $_GET['idrole'];
-  $admin->setId($iduse);
-  $admin->chngRole();
- header('Location: user.php');
- }
-
 ?>
 
 
@@ -182,8 +165,8 @@ if(isset($_GET['idrole'])){
                                     </td>
                                     <td>
                                         <div class="actions">
-                                            <span ><a href="user.php?idUser=<?php echo $user['useId']; ?>"><i class="fa-solid fa-trash"></i></a></span>
-                                            <span class="ml-8"><a href="user.php?idrole=<?php echo $user['useId']; ?>"><i class="fa-solid fa-user-tie"></i></a></span>
+                                            <span ><a href="../.././controller/controluser.php?idUser=<?php echo $user['useId']; ?>"><i class="fa-solid fa-trash"></i></a></span>
+                                            <span class="ml-8"><a href="../.././controller/controluser.php?idrole=<?php echo $user['useId']; ?>"><i class="fa-solid fa-user-tie"></i></a></span>
                    
                                         </div>
                                     </td>
