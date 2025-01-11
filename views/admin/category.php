@@ -8,25 +8,16 @@
      header("Location: blog.php"); 
      exit();
    }
+//affiche data in edit 
+if(isset($_GET['editId'])){
 
-// //delet category
-//  if(isset($_GET['idcatgr'])){
-//     $catgrId = $_GET['idcatgr'];
-//  $delet = $cnx->prepare('DELETE FROM category WHERE catId=?');
-//  $delet->execute([$catgrId]); 
-//  header('Location: category.php');
-//  }
+    $id = $_GET['editId'];
+    $category ->setId( $id);
+    $tab = $category ->getCategoryId();
+    var_dump($tab);
+  header('Location: category.php'); 
+}
 
-//  //affiche data in edit 
-//  if(isset($_GET['editId'])){
-
-//     $id = $_GET['editId'];
-//     $edit = "SELECT * FROM `category` WHERE catId = $id";
-//     $result = mysqli_query($cnx, $edit);
-//     $tab = mysqli_fetch_assoc($result);
-
-   
-// }
 //edit category
 
 
@@ -152,7 +143,7 @@
                         
                     </div>
                     <div id="editcat" class="record-header w-[1px] h-[10px] mr-[50px]" >
-                        <form method="post" action="editcategory.php?idcatgr=<?php echo $tab['catId']; ?>">
+                        <form method="post" action="../.././controller/controlCategory.php?idcatgr=<?php echo $tab['catId']; ?>">
                              <div class="add">
                           <input class="ml-5" name="nameedit" type="text" placeholder="enter Category" value="<?php echo isset($tab['name']) ?  $tab['name'] : '' ;?>">
                           <button type="submit" name="editcat" id="hideedit">  Edit </button>
@@ -192,8 +183,8 @@
                                     
                                     <td class="flex">
                                         <div class="actions ml-3">
-                                            <span ><a  href="category.php?idcatgr=<?php echo $row['catId']; ?>"><i class="fa-solid fa-trash"></i></a></span>
-                                            <span id="editbtn" class="ml-7"><a  href="category.php?editId=<?php echo $row['catId']; ?>"><i class="fa-regular fa-pen-to-square"></i></a></span>                        
+                                            <span ><a  href="../.././controller/controlCategory.php?iddelcatgr=<?php echo $row['catId']; ?>"><i class="fa-solid fa-trash"></i></a></span>
+                                            <span id="editbtn" class="ml-7"><a  href="./category.php?php echo $row['catId']; ?>"><i class="fa-regular fa-pen-to-square"></i></a></span>                        
                                         </div>
                   
                     <div>
