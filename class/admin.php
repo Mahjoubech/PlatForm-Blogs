@@ -1,5 +1,5 @@
 <?php 
-require_once './User.php';
+require_Once 'User.php';
 class Admin extends User{
     private $id;
     public function __construct($cnx) {
@@ -21,6 +21,7 @@ class Admin extends User{
         $change->execute([$this->getId()]);
     
      }
+     
 }
 
 
