@@ -25,3 +25,11 @@ $cat = new Category($db->getConnection());
         exit;
      }
 }
+//delet category
+ if(isset($_GET['iddelcatgr'])){
+    $catgrId = $_GET['iddelcatgr'];
+    $cat->setId($catgrId);
+    $cat->deletCategory();
+ header('Location: .././views/admin/category.php');
+ }
+  
