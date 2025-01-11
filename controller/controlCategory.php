@@ -32,4 +32,14 @@ $cat = new Category($db->getConnection());
     $cat->deletCategory();
  header('Location: .././views/admin/category.php');
  }
+ //edi
+ if( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editcat'])){
+    $id = $_GET['idcatgr'];
+    $name = $_POST['nameedit'];
+    $cat->setId($id);
+    $cat->setName($name);
+    $cat->editCategory();
+ header('Location: .././views/admin/category.php');
+    
+}
   
