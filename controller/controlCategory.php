@@ -1,0 +1,27 @@
+<?php
+ require_once '../database/connexion.php';
+ require_once '../class/Category.php';
+ $db = new DatabaseConnection();
+
+$cat = new Category($db->getConnection());
+//  //ajout category
+ if( $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['addcat'])){
+    $nameCat = htmlspecialchars($_POST['namecat']);
+    $cat->setName($nameCat);
+    $errors = [];
+    if (empty($nameCat)) {
+        $errors[] = "< script > alert('invalid name') < /script>";
+    }
+    if (empty($errors)) {
+        //insert into
+        $cat->addCategory();
+    header('Location: .././views/admin/category.php');
+       exit;
+       }else{
+        $_SESSION['errors'] = $errors;
+        print_r($_SESSION['errors']);
+        unset($_SESSION['errors']);
+        header('Location: .././views/admin/category.php');
+        exit;
+     }
+}
